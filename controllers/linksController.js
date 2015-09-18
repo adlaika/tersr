@@ -4,7 +4,7 @@ var Link = require('../models/linksModel')
 
 exports.view = function(req, res) {
     Link.getAll(function(err, result) {
-        res.render('index')
+        res.render('index', {links: result})
     })
 }
 

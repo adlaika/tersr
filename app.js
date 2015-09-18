@@ -25,22 +25,22 @@ module.exports = {
 }
 
 ////test data
-//var coll = db.get('links')
-//coll.drop()
-//coll.insert({name: 'bob'})
-//coll.insert({name: 'jim'})
-//coll.insert({name: 'terry'})
-//coll.insert({name: 'giorno'})
-//coll.find({}, function(err, docs) {
-//    console.log(docs)
-//})
+var coll = db.get('links')
+coll.drop()
+coll.insert({name: 'bob'})
+coll.insert({name: 'jim'})
+coll.insert({name: 'terry'})
+coll.insert({name: 'giorno'})
+coll.find({}, function(err, docs) {
+    console.log(docs)
+})
 
 //now that db is init, can access controllers and models
 var links = require('./controllers/linksController')
 
 //general
 app.get('/', function(req, res) {
-    res.render('index')
+    res.redirect('/links')
 })
 
 //link routes
