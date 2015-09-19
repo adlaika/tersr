@@ -1,5 +1,5 @@
 var should = require('should')
-var monk = require('monk')
+var redis = require('redis')
 
 var Link = require('../models/linksModel')
 var db
@@ -8,19 +8,22 @@ var links
 describe('Model Link', function() {
 
     before(function(done) {
-        db = monk('mongodb://localhost:27017/tersr');
+        db = redis.createClient()
+        db.on('connect', function() {
+            console.log('redis connected')
+        })
         done()
     })
 
     beforeEach(function(done) {
-        links = db.get('links')
-        links.insert({boop: 'beep'})
+
         done()
     })
 
     after(function (done) {
-        links.drop()
-        db.close(done)
+        db.flushdb()
+        db.end();
+        done()
     })
 
     it('db should exist', function(done) {
@@ -28,8 +31,9 @@ describe('Model Link', function() {
         done()
     })
 
-    it('db should have links collection', function(done) {
-        db.collections.should.have.property('links')
-        done()
-    })
+    //    db.hmset("links", {"id" : "beep"}, redis.print)
+    //    db.hgetall("links", function(err, obj) {
+    //        console.dir(obj)
+    //    })
+
 })

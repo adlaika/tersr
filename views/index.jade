@@ -1,7 +1,10 @@
 head
    title tersr
 body
-   h1 Lnks
-      ul
-         each link in links
-            li #{link.name}
+   h1 Ters yr lnk?
+      form(name='create', action='/', method='post')
+         input(type='url', name='url', value='https://www.google.com/')
+   #links
+      if link
+         p url: #{link.url}
+         p tersd: www.tersr.com/s/#{link.short}

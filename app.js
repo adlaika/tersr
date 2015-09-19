@@ -1,8 +1,27 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
-var dbUri = 'mongodb://localhost:27017/tersr'
-var monk = require('monk')
+
+//ENV
+var env = process.env.NODE_ENV
+
+//set up db
+var redis = require('redis')
+var db = redis.createClient()
+db.on('connect', function() {
+    console.log('redis connected')
+})
+//if linkCounter doesn't exist, create it
+db.exists('linkCounter', function(error, exists) {
+    if(error) {
+        console.log('ERROR: ', error);
+    }
+    //otherwise exists will be available, and we can do something with it
+    else if(!exists) {
+        db.set('linkCounter', 0);
+    };
+});
+exports.db = db;
 
 //set up Jade templating
 app.engine('jade', require('jade').__express)
@@ -17,35 +36,17 @@ app.use(express.static(__dirname + '/public'))
 // parse request bodies (req.body)
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//connect to MongoDb
-var db = monk(dbUri)
-//export must occur before route registration
-module.exports = {
-    db: db
-}
-
-////test data
-var coll = db.get('links')
-coll.drop()
-coll.insert({name: 'bob'})
-coll.insert({name: 'jim'})
-coll.insert({name: 'terry'})
-coll.insert({name: 'giorno'})
-coll.find({}, function(err, docs) {
-    console.log(docs)
-})
-
 //now that db is init, can access controllers and models
 var links = require('./controllers/linksController')
 
 //general
 app.get('/', function(req, res) {
-    res.redirect('/links')
+    res.render('index')
 })
 
 //link routes
-app.get('/links', links.view)
-app.post('/links', links.create)
+app.get('/s/*', links.redirect)
+app.post('/', links.add)
 
 
 //start server
