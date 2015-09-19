@@ -32,13 +32,11 @@ var addNewLink = function(url, cb) {
     })
 }
 
-exports.get = function(short, cb) {
+var getLink = function(short, cb) {
     //convert base36 back to base10 so we can retrieve record at id
     var linkId = short.toString(10)
     var linkKey = 'link:' + linkId
-    console.log("linkKey: ", linkKey)
-    db.get(linkKey, function(err, linkObj) {
-        console.log('linkId: ', linkId)
+    db.hgetall(linkKey, function(err, linkObj) {
         cb(err, linkObj)
     })
 }
@@ -47,4 +45,5 @@ module.exports = {
     set: set,
     getUniqueId: getUniqueId,
     addNewLink: addNewLink,
+    getLink: getLink
 }
