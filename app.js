@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var app = express()
 
 //ENV
-var env = process.env.NODE_ENV
+exports.env = process.env.NODE_ENV || 'development'
 
 //set up db
 var redis = require('redis')
