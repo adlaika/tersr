@@ -1,7 +1,7 @@
 var should = require('should')
 var redis = require('redis')
 
-var Link = require('../models/linksModel')
+var Link = require('../server/models/linksModel')
 var db
 
 describe('Database Interaction Tests', function() {

@@ -1,7 +1,7 @@
 //var should = require('should')
 //var redis = require('redis')
 //
-//var LinksCtrl = require('../controllers/linksController.js')
+//var LinksCtrl = require('../server/controllers/linksController.js')
 //
 //describe('Controller Tests', function() {
 //    describe('Links', function() {
