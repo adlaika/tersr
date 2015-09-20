@@ -45,8 +45,8 @@ app.get('/', function(req, res) {
 })
 
 //link routes
-app.get('/s/*', links.redirect)
-app.post('/', links.add)
+app.get('/s/*', links.goToUrl)
+app.post('/', links.addNewLink)
 
 
 //start server

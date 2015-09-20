@@ -3,9 +3,8 @@ var redis = require('redis')
 
 var Link = require('../models/linksModel')
 var db
-var links
 
-describe('Database Interactions', function() {
+describe('Database Interaction Tests', function() {
     describe('Model - Link', function() {
         before(function(done) {
             db = redis.createClient()
@@ -22,7 +21,7 @@ describe('Database Interactions', function() {
         })
 
         after(function (done) {
-//db.flushdb()
+            db.flushdb()
             db.end();
             done()
         })
