@@ -2,4 +2,4 @@ deployment:
   production:
     branch: production
     commands:
-      - ./deploy_production.sh
+      - sh ./deploy_production.sh
