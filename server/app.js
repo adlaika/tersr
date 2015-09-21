@@ -5,7 +5,7 @@ var app = express()
 //ENV
 var DB_HOST
 var env = process.env.NODE_ENV || 'development'
-if (env !== 'development') {
+if (env === 'production') {
     DB_HOST = 'tersr.5n3dcl.ng.0001.usw2.cache.amazonaws.com'
 } else {
     DB_HOST = '127.0.0.1'
