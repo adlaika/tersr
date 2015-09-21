@@ -16,19 +16,10 @@ if (env === 'production') {
 //set up db
 var redis = require('redis')
 var db = redis.createClient(6379, DB_HOST)
+console.log('redis attempting to connect to ' + DB_HOST)
 db.on('connect', function() {
     console.log('redis connected')
 })
-//if linkCounter doesn't exist, create it
-db.exists('linkCounter', function(error, exists) {
-    if(error) {
-        console.log('ERROR: ', error);
-    }
-    //otherwise exists will be available, and we can do something with it
-    else if(!exists) {
-        db.set('linkCounter', 0);
-    };
-});
 module.exports = {
     db: db,
     env: env
