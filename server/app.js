@@ -3,11 +3,17 @@ var bodyParser = require('body-parser')
 var app = express()
 
 //ENV
-exports.env = process.env.NODE_ENV || 'development'
+var DB_HOST
+var env = process.env.NODE_ENV || 'development'
+if (env !== 'development') {
+    DB_HOST = 'tersr.5n3dcl.ng.0001.usw2.cache.amazonaws.com'
+} else {
+    DB_HOST = '127.0.0.1'
+}
 
 //set up db
 var redis = require('redis')
-var db = redis.createClient()
+var db = redis.createClient(6379, DB_HOST)
 db.on('connect', function() {
     console.log('redis connected')
 })
@@ -21,7 +27,10 @@ db.exists('linkCounter', function(error, exists) {
         db.set('linkCounter', 0);
     };
 });
-exports.db = db;
+module.exports = {
+    db: db,
+    env: env
+}
 
 //set up Jade templating
 app.engine('jade', require('jade').__express)
