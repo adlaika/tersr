@@ -1,5 +1,6 @@
  #!/bin/bash
 
+# TODO: maybe add this to circleCI?
 EC2KEY="/Users/michaelarnold/Documents/tersr-key.pem"
 
 # echo CLEANING!
@@ -7,6 +8,7 @@ EC2KEY="/Users/michaelarnold/Documents/tersr-key.pem"
 # echo BUILDING!
 # gulp build
 echo COPYING
+# maybe use ssh -> git clone instead? Would guarantee use of the production branch
 scp -i $EC2KEY -r server/* ec2-user@52.27.205.191:tersr
 scp -i $EC2KEY package.json ec2-user@52.27.205.191:tersr
 echo TUNNELING!

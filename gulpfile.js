@@ -1,3 +1,5 @@
+//TODO: get this actually working...or don't. The app IS tiny, after all.
+
 var gulp = require('gulp')
 var uglify = require('gulp-uglify')
 var concat = require('gulp-concat')

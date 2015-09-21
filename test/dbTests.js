@@ -1,3 +1,5 @@
+// TODO: other kinds of tests--integration, end-to-end, etc
+
 var should = require('should')
 var redis = require('redis')
 
