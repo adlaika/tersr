@@ -1,6 +1,6 @@
  #!/bin/bash
 
-# TODO: maybe add this to circleCI?
+# TODO: maybe add key to circleCI?
 EC2KEY="secrets/tersr-key.pem"
 
 # echo CLEANING!

@@ -2,7 +2,7 @@ var Link = require('../models/linksModel')
 
 var addNewLink = function(req, res) {
     Link.addNewLink(req.body.url, function(err, message, short, url) {
-        res.render('index', {link: {short: short, url: url}})
+        res.render('index', {link: {short: req.header('host') + '/' + short, url: url}})
     })
 }
 

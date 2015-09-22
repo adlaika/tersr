@@ -47,9 +47,14 @@ app.get('/', function(req, res) {
 })
 
 //link routes
+// TODO: use this rule: if incoming route contains > 1 '/', it's one of my routes. Otherwise, it's a short URL and should be redirected to. NOTE: express routing can use regexp
 app.get('/s/*', links.goToUrl)
 app.post('/', links.addNewLink)
 
+//404s
+app.use('/*', function(req, res) {
+    res.sendStatus(404)
+})
 
 //start server
 var server = app.listen(3000, function () {
