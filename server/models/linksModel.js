@@ -22,11 +22,9 @@ var addNewLink = function(url, cb) {
                 'url': url,
                 'id': id
             }, function(err, message){
-                if (message === 'OK') {
-                    //convert id to base36--this will be our short url
-                    var short = id.toString(36)
-                    cb(err, message, short, url)
-                }
+                //convert id to base36--this will be our short url
+                var short = id.toString(36)
+                cb(err, message, short, url)
             })
         }
     })
@@ -34,7 +32,7 @@ var addNewLink = function(url, cb) {
 
 var getLink = function(short, cb) {
     //convert base36 back to base10 so we can retrieve record at id
-    var linkId = short.toString(10)
+    var linkId = parseInt(short, 36)
     var linkKey = 'link:' + linkId
     db.hgetall(linkKey, function(err, linkObj) {
         cb(err, linkObj)
