@@ -41,20 +41,58 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //now that db is init, can access controllers and models
 var links = require('./controllers/linksController')
 
-//general
+function isMyRoute (req, res, next) {
+    // takes incoming route and returns true if more than one '/' present
+    // for instance, '/api/addLink' -> true; /dsf3rf -> false
+    var path = req.path
+    // remove leading and trailing /s, if they exist. TODO same code as trimSlashes, move to /helpers
+    if (path[path.length - 1] === '/') {
+        path = path.substring(0, path.length - 1)
+    }
+    if (path[0] === '/') {
+        path = path.substring(1)
+    }
+    // check for any remaining /s and attach boolean to res.locals
+    // (which is automatically scoped to life of current request) before calling next
+    res.locals.isMyRoute = !!path.match('/')
+    next()
+}
+
+// default index
 app.get('/', function(req, res) {
     res.render('index')
 })
 
-//link routes
-// TODO: use this rule: if incoming route contains > 1 '/', it's one of my routes. Otherwise, it's a short URL and should be redirected to. NOTE: express routing can use regexp
-app.get('/s/*', links.goToUrl)
+// link logic routes
+// if incoming route contains non-leading, non-trailing /s, it's one of my routes.
+// Otherwise, it's a short URL and should be redirected to.
+app.get('/*', isMyRoute, links.goToUrl)
 app.post('/', links.addNewLink)
 
 //404s
-app.use('/*', function(req, res) {
+app.get('/*', function(req, res) {
     res.sendStatus(404)
 })
+
+// the error handler is strategically
+// placed *below* routes; if it
+// were above it would not receive errors
+// from app.get() etc
+// when passing errors, use next(new Error('error message'))
+app.use(error)
+
+// error handling middleware have an arity of 4
+// instead of the typical (req, res, next),
+// otherwise they behave exactly like regular
+// middleware, you may have several of them,
+// in different orders etc.
+function error(err, req, res, next) {
+    // log it
+    console.error(err.stack)
+
+    // respond with 500 "Internal Server Error".
+    res.sendStatus(500);
+}
 
 //start server
 var server = app.listen(3000, function () {
