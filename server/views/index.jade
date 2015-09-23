@@ -6,5 +6,6 @@ body
          input(type='url', name='url', value='https://www.google.com/')
    #links
       if link
-         p url: #{link.url}
-         p tersd: #{baseUrl}#{link.short}
+         span url: #{link.url}
+         br
+         span tersd: #[a(href="#{link.url}") #{link.short}]
