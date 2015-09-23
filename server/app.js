@@ -4,12 +4,16 @@ var app = express()
 var util = require('./helpers/util.js')
 
 // ENV
+var HOST
 var DB_HOST
 var env = process.env.NODE_ENV || 'development'
 if (env === 'production') {
+    // TODO: outsource these to env variables...in CircleCI, maybe?
     DB_HOST = 'tersr.5n3dcl.ng.0001.usw2.cache.amazonaws.com'
+    HOST = 'http://52.27.205.191:3000/'
 } else {
     DB_HOST = '127.0.0.1'
+    HOST = 'http://localhost:3000/'
 }
 
 // set up db
@@ -21,7 +25,9 @@ db.on('connect', function() {
 })
 module.exports = {
     db: db,
-    env: env
+    env: env,
+    DB_HOST: DB_HOST,
+    HOST: HOST
 }
 
 // set up Jade templating
@@ -66,17 +72,13 @@ app.get('/*', function(req, res) {
     res.sendStatus(404)
 })
 
-// the error handler is strategically
-// placed *below* routes; if it
-// were above it would not receive errors
-// from app.get() etc
+// the error handler is placed below routes; if it
+// were above it would not receive errors from app.get() etc
 // when passing errors, use next(new Error('error message'))
 app.use(error)
 
-// error handling middleware have an arity of 4
-// instead of the typical (req, res, next),
-// otherwise they behave exactly like regular
-// middleware, you may have several of them,
+// error handling middleware have an arity of 4 instead of the typical (req, res, next),
+// otherwise they behave exactly like regular middleware, you may have several of them,
 // in different orders etc.
 function error(err, req, res, next) {
     // log it

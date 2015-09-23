@@ -3,7 +3,6 @@ var util = require('../server/helpers/util.js')
 
 describe('Utility Tests', function() {
     describe('trimSlashes', function() {
-        console.log(util.trimSlashes(424))
         it('should throw an error if argument is not a string', function() {
             (function() { util.trimSlashes(null) }).should.throw();
             (function() { util.trimSlashes(true) }).should.throw();
