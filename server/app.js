@@ -1,10 +1,9 @@
-// TODO: MOST IMPORTANT: ERROR CHECKING / REPORTING
-
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
+var util = require('./helpers/util.js')
 
-//ENV
+// ENV
 var DB_HOST
 var env = process.env.NODE_ENV || 'development'
 if (env === 'production') {
@@ -13,7 +12,7 @@ if (env === 'production') {
     DB_HOST = '127.0.0.1'
 }
 
-//set up db
+// set up db
 var redis = require('redis')
 var db = redis.createClient(6379, DB_HOST)
 console.log('redis attempting to connect to ' + DB_HOST)
@@ -25,11 +24,11 @@ module.exports = {
     env: env
 }
 
-//set up Jade templating
+// set up Jade templating
 app.engine('jade', require('jade').__express)
 app.set('view engine', 'jade')
 
-//set up views for error / 404s
+// set up views
 app.set('views', __dirname + '/views')
 
 // serve static files
@@ -44,16 +43,9 @@ var links = require('./controllers/linksController')
 function isMyRoute (req, res, next) {
     // takes incoming route and returns true if more than one '/' present
     // for instance, '/api/addLink' -> true; /dsf3rf -> false
-    var path = req.path
-    // remove leading and trailing /s, if they exist. TODO same code as trimSlashes, move to /helpers
-    if (path[path.length - 1] === '/') {
-        path = path.substring(0, path.length - 1)
-    }
-    if (path[0] === '/') {
-        path = path.substring(1)
-    }
+    var path = util.trimSlashes(req.path)
     // check for any remaining /s and attach boolean to res.locals
-    // (which is automatically scoped to life of current request) before calling next
+    // (which is automatically scoped to life of current request) before calling next matching route handler
     res.locals.isMyRoute = !!path.match('/')
     next()
 }
