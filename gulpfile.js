@@ -7,7 +7,8 @@ var del = require('del')
 
 /* minify */
 gulp.task('minify', function() {
-    gulp.src(['./**/*.js', '!node_modules/**', '!test/**'])
+    gulp.src(['./server/**.js'])
+        .pipe(uglify())
         .pipe(concat('app.min.js'))
         .pipe(gulp.dest('./build/'))
 })

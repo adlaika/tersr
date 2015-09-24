@@ -1,11 +1,14 @@
 head
-   title tersr
+    link(href='/css/style.css', rel='stylesheet')
+    title tersr
 body
-   h1 Ters yr lnk?
-      form(name='create', action='/', method='post')
-         input(type='url', name='url', value='https://www.google.com/' required)
-   #links
-      if link
-         span url: #{link.url}
-         br
-         span tersd: #[a(href="#{link.url}") #{link.short}]
+    .center-container
+        .center-container.center-text
+            h1 Ters yr lnk?
+            form(name='create', action='/', method='post')
+                input(type='url', name='url', value='https://www.google.com/' required)
+            #links
+                if link
+                    span url: #{link.url}
+                    br
+                    span tersd: #[a(href="#{link.url}") #{link.short}]

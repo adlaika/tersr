@@ -6,6 +6,7 @@ function goToUrl(req, res, next) {
     if (!res.locals.isMyRoute) {
         var short = util.trimSlashes(req.path)
         Link.getLink(short, function (err, linkObj) {
+            // pass err OR redirect to short link OR pass to next route handler
             if (err) next(err)
             else if (linkObj) res.redirect(linkObj.url)
             else next()
