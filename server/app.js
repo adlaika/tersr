@@ -12,7 +12,7 @@ var env = process.env.NODE_ENV || 'development';
 if (env === 'production') {
     // TODO: outsource these to env variables...in CircleCI, maybe?
     DB_HOST = 'tersr.5n3dcl.ng.0001.usw2.cache.amazonaws.com';
-    HOST = 'http://52.27.205.191:3000/'
+    HOST = 'http://52.27.205.191:3000'
 } else {
     DB_HOST = '127.0.0.1';
     HOST = 'http://localhost:3000'
