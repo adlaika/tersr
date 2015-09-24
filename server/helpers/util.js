@@ -1,5 +1,5 @@
 function trimSlashes (path) {
-    if (typeof path !== 'string') throw new TypeError(path + ' is not a string!')
+    if (typeof path !== 'string') throw new TypeError(path + ' is not a string!');
     if (path[path.length - 1] === '/') {
         path = path.substring(0, path.length - 1)
     }
@@ -11,4 +11,4 @@ function trimSlashes (path) {
 
 module.exports = {
     trimSlashes: trimSlashes
-}
+};

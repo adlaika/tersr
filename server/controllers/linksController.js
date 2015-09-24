@@ -1,14 +1,14 @@
-var Link = require('../models/linksModel')
-var util = require('../helpers/util.js')
+var Link = require('../models/linksModel');
+var util = require('../helpers/util.js');
 
 function goToUrl(req, res, next) {
     // only go to short url if path is not one of my routes, else hand request to next matching handler
     if (!res.locals.isMyRoute) {
-        var short = util.trimSlashes(req.path)
+        var short = util.trimSlashes(req.path);
         Link.getLink(short, function (err, linkObj) {
             // pass err OR redirect to short link OR pass to next route handler
-            if (err) next(err)
-            else if (linkObj) res.redirect(linkObj.url)
+            if (err) next(err);
+            else if (linkObj) res.redirect(linkObj.url);
             else next()
         })
     } else next()
@@ -23,4 +23,4 @@ function addNewLink(req, res, next) {
 module.exports = {
     addNewLink: addNewLink,
     goToUrl: goToUrl
-}
+};
