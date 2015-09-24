@@ -4,11 +4,11 @@ head
 body
     .center-container
         .center-container.center-text
-            h1 Ters yr lnk?
+            h1 Paste link to tersify it:
             form(name='create', action='/', method='post')
-                input(type='url', name='url', value='https://www.google.com/' required)
+                input.longerTextBox(type='url', name='url', value='https://www.google.com/' required)
             #links
                 if link
                     span url: #{link.url}
                     br
-                    span tersd: #[a(href="#{link.url}") #{link.short}]
+                    span ters'd: #[a(href="#{link.url}") #{link.short}]

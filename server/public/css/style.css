@@ -1,15 +1,19 @@
-body {
-    background-color: #eeeeee;
-}
-
 .center-container {
     position:absolute;
-    width:300px;
+    width:400px;
     height:200px;
     left:50%;
-    margin: 0 0 0 -150px;
+    margin: 0 0 0 -200px;
 }
 
 .center-text {
     text-align: center;
+}
+
+.longerTextBox {
+    width: 100%
+}
+
+input{
+    text-align:center;
 }
