@@ -2,6 +2,8 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
 var util = require('./helpers/util.js')
+var fs = require('fs')
+var morgan = require('morgan')
 
 // ENV
 var HOST
@@ -29,6 +31,12 @@ module.exports = {
     DB_HOST: DB_HOST,
     HOST: HOST
 }
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'})
+
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}))
 
 // set up Jade templating
 app.engine('jade', require('jade').__express)
