@@ -19,7 +19,8 @@ function addNewLink(req, res, next) {
     Link.addNewLink(req.body.url, function (err, message, short, url) {
         if (err) next(err);
         else {
-            res.locals.newLink = {'short': req.header('host') + '/' + short, 'url': url};
+            var host = 'http://' + req.header('host');
+            res.locals.newLink = {'short': host + '/' + short, 'url': url};
             next();
         }
     });

@@ -156,23 +156,21 @@ describe('Tersr', function() {
                 });
         });
     });
-
-    describe('API Tests', function() {
-        it('POST to /api/link/add returns shortURL', function() {
-            api()
-                .url('/api/link/add')
-                .json()
-                .method('POST')
-                .send({ "url": "http://www.reddit.com" })
-                .expectStatus(201)
-                .expectValue('short', app.HOST + '/3')
-                .expectValue("url", "http://www.reddit.com")
-                .end(function (err, res, body) {
-                    if (err) throw err;
-                    done();
-                });
+        describe('API Tests', function () {
+            it('POST to /api/link/add returns shortURL', function (done) {
+                api()
+                    .url("/api/link/add")
+                    .json()
+                    .method("POST")
+                    .send({"url": "http://www.reddit.com"})
+                    .expectValue("short", app.HOST + "/4")
+                    .expectValue("url", "http://www.reddit.com")
+                    .end(function (err, res, body) {
+                        if (err) throw err;
+                        done();
+                    });
+            });
         });
-    });
 });
 
 function api() {
