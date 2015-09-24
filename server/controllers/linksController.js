@@ -12,15 +12,29 @@ function goToUrl(req, res, next) {
             else next()
         })
     } else next()
-}
+};
 
+//adds new link and saves to res.locals. DOES NOT SEND RESPONSE.
 function addNewLink(req, res, next) {
+    var short = req.header('host') + '/' + short;
     Link.addNewLink(req.body.url, function (err, message, short, url) {
-        err ? next(err) : res.render('index', {link: {short: req.header('host') + '/' + short, url: url}})
+        err ? next(err) : res.locals.newLink = { 'short': req.header('host') + '/' + short, 'url': url };
+        next();
     })
-}
+};
+
+function renderNewLink (req, res) {
+    res.render('index', { link: res.locals.newLink })
+};
+
+function returnNewLink (req, res, next) {
+    res.json(res.locals.newLink);
+};
+
 
 module.exports = {
     addNewLink: addNewLink,
-    goToUrl: goToUrl
+    goToUrl: goToUrl,
+    renderNewLink: renderNewLink,
+    returnNewLink: returnNewLink
 };

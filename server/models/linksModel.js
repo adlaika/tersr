@@ -3,15 +3,15 @@ var db = require('../app').db;
 var set = function(key, value, cb) {
     if (typeof cb !== 'function') throw new TypeError(cb + ' is not a function!');
     db.set(key, value, function(err, message) {
-        cb(message)
-    })
+        cb(message);
+    });
 };
 
 var getUniqueId = function(cb) {
     if (typeof cb !== 'function') throw new TypeError(cb + ' is not a function!');
     db.incr('linkCounter', function(err, reply) {
-        cb(err, reply)
-    })
+        cb(err, reply);
+    });
 };
 
 var addNewLink = function(url, cb) {
@@ -28,7 +28,7 @@ var addNewLink = function(url, cb) {
             }, function(err, message){
                 //convert id to base36--this will be our short url
                 var short = id.toString(36);
-                cb(err, message, short, url)
+                cb(err, message, short, url);
             })
         }
     })
@@ -40,8 +40,8 @@ var getLink = function(short, cb) {
     var linkId = parseInt(short, 36);
     var linkKey = 'link:' + linkId;
     db.hgetall(linkKey, function(err, linkObj) {
-        cb(err, linkObj)
-    })
+        cb(err, linkObj);
+    });
 };
 
 module.exports = {

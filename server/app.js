@@ -73,7 +73,10 @@ app.get('/', function(req, res) {
 // if incoming route contains non-leading, non-trailing /s, it's one of my routes.
 // Otherwise, it's a short URL and should be redirected to.
 app.get('/*', isMyRoute, links.goToUrl);
-app.post('/', links.addNewLink);
+app.post('/', links.addNewLink, links.renderNewLink);
+
+// api routes
+app.post('/api/link/add', debug, links.addNewLink)
 
 //404s
 app.get('/*', function(req, res) {
