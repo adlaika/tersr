@@ -18,13 +18,13 @@ describe('Tersr', function() {
         });
         db.flushdb();
         db.set('foo', 'bar');
-        done()
+        done();
     });
 
     after(function (done) {
         db.flushdb();
         db.end();
-        done()
+        done();
     });
 
 
@@ -80,10 +80,10 @@ describe('Tersr', function() {
             it('Link.getLink returns a previously added link', function (done) {
                 Link.getLink('2', function (err, linkObj) {
                     linkObj.should.deepEqual(linkObj, {url: 'www.google.com', id: '2'});
-                    done()
-                })
-            })
-        })
+                    done();
+                });
+            });
+        });
     });
 
     describe('Utility Tests', function () {
@@ -112,8 +112,8 @@ describe('Tersr', function() {
                 util.trimSlashes('/foo/bar/').should.equal('foo/bar');
                 util.trimSlashes('/foo/bar').should.equal('foo/bar');
                 util.trimSlashes('foo/bar/').should.equal('foo/bar')
-            })
-        })
+            });
+        });
     });
 
     describe('Route Tests', function () {
@@ -124,7 +124,7 @@ describe('Tersr', function() {
                 .end(function (err, res, body) {
                     if (err) throw err;
                     done()
-                })
+                });
         });
         it('GET to non-extant short link returns 404', function (done) {
             api()
@@ -133,7 +133,7 @@ describe('Tersr', function() {
                 .end(function (err, res, body) {
                     if (err) throw err;
                     done()
-                })
+                });
         });
         it('POST form to / returns 200', function (done) {
             api()
@@ -144,34 +144,39 @@ describe('Tersr', function() {
                 .end(function (err, res, body) {
                     if (err) throw err;
                     done()
-                })
+                });
         });
         it('GET to last added shortUrl should redirect', function (done) {
             api()
-                .get('3')
+                .get('/3')
                 .expectStatus(302)
                 .end(function (err, res, body) {
                     if (err) throw err;
                     done()
-                })
-        })
-    })
+                });
+        });
+    });
+
     describe('API Tests', function() {
         it('POST to /api/link/add returns shortURL', function() {
             api()
-                .post('api/link/add')
-                .send({url: 'http://www.reddit.com'})
+                .url('/api/link/add')
+                .json()
+                .method('POST')
+                .send({ "url": "http://www.reddit.com" })
                 .expectStatus(201)
+                .expectValue('short', app.HOST + '/3')
+                .expectValue("url", "http://www.reddit.com")
                 .end(function (err, res, body) {
                     if (err) throw err;
-                    done()
-                })
-        })
-    })
+                    done();
+                });
+        });
+    });
 });
 
 function api() {
     return hippie()
-        .base(app.HOST)
-}
+        .base(app.HOST);
+};
 

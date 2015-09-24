@@ -15,7 +15,7 @@ if (env === 'production') {
     HOST = 'http://52.27.205.191:3000/'
 } else {
     DB_HOST = '127.0.0.1';
-    HOST = 'http://localhost:3000/'
+    HOST = 'http://localhost:3000'
 }
 
 // set up db
@@ -48,8 +48,11 @@ app.set('views', __dirname + '/views');
 // serve static files
 app.use(express.static(__dirname + '/public'));
 
-// parse request bodies (req.body)
-app.use(bodyParser.urlencoded({ extended: true }));
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 //now that db is init, can access controllers and models
 var links = require('./controllers/linksController');
@@ -76,7 +79,7 @@ app.get('/*', isMyRoute, links.goToUrl);
 app.post('/', links.addNewLink, links.renderNewLink);
 
 // api routes
-app.post('/api/link/add', debug, links.addNewLink)
+app.post('/api/link/add', links.addNewLink, links.returnNewLink)
 
 //404s
 app.get('/*', function(req, res) {
@@ -97,7 +100,16 @@ function error(err, req, res, next) {
 
     // respond with 500 "Internal Server Error".
     res.sendStatus(500);
-}
+};
+
+// log req and res objs middleware
+function debug(req, res, next) {
+    console.log('===============================REQUEST=================================\n');
+    console.log(req);
+    console.log('===============================RESPONSE================================\n');
+    console.log(req);
+    next();
+};
 
 //start server
 var server = app.listen(3000, function () {
