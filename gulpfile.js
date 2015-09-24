@@ -1,4 +1,4 @@
-//TODO: get this actually working...or don't. The app IS tiny, after all.
+//TODO: get this actually working...or don't. The app IS tiny, after all. Low priority
 
 var gulp = require('gulp')
 var uglify = require('gulp-uglify')
