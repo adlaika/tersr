@@ -1,5 +1,6 @@
 .center-container {
     position:absolute;
+    word-wrap: break-word;
     width:400px;
     height:200px;
     left:50%;
