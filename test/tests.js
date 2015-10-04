@@ -45,7 +45,7 @@ describe('Tersr', function() {
             });
 
             it('Link.set saves key to db', function (done) {
-                Link.set('foo2', 'bar2', function (message) {
+                Link.set('foo2', 'bar2', function (err, message) {
                     message.should.equal('OK');
                     db.get('foo2', function (err, reply) {
                         reply.should.equal('bar2');

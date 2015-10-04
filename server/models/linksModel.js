@@ -3,7 +3,7 @@ var db = require('../app').db;
 var set = function(key, value, cb) {
     if (typeof cb !== 'function') throw new TypeError(cb + ' is not a function!');
     db.set(key, value, function(err, message) {
-        cb(message);
+        cb(err, message);
     });
 };
 
