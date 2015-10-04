@@ -9,9 +9,9 @@ function goToUrl(req, res, next) {
             // pass err OR redirect to short link OR pass to next route handler
             if (err) next(err);
             else if (linkObj) res.redirect(linkObj.url);
-            else next()
+            else next();
         })
-    } else next()
+    } else next();
 }
 //adds new link and saves to res.locals. DOES NOT SEND RESPONSE.
 function addNewLink(req, res, next) {
@@ -26,7 +26,7 @@ function addNewLink(req, res, next) {
     });
 }
 function renderNewLink (req, res) {
-    res.render('index', { link: res.locals.newLink })
+    res.render('index', { link: res.locals.newLink });
 }
 function returnNewLink (req, res) {
     res.send(res.locals.newLink);

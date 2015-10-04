@@ -10,8 +10,8 @@ var HOST;
 var DB_HOST;
 var env = process.env.NODE_ENV || 'development';
 if (env === 'production') {
-    // TODO: outsource these to env variables...in CircleCI, maybe?
-    DB_HOST = 'tersrdb.5n3dcl.ng.0001.usw2.cache.amazonaws.com';
+    // TODO: outsource these to env variables
+    DB_HOST = 'terserdb.5n3dcl.0001.usw2.cache.amazonaws.com';
     HOST = 'http://52.27.205.191:3000'
 } else {
     DB_HOST = '127.0.0.1';
