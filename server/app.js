@@ -25,6 +25,11 @@ console.log('redis attempting to connect to ' + DB_HOST);
 db.on('connect', function() {
     console.log('redis connected')
 });
+// set snapshotting for redis persistence
+db.send_command("config", ["set", "save", "10 2 30 1"], function(err, res) {
+    if (err) console.log(err);
+    console.log(res);
+})
 module.exports = {
     db: db,
     env: env,
